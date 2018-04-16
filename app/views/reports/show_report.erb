@@ -1,0 +1,18 @@
+
+
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/reports">Research Hub</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/users/<%=@user.slug%>">Home</a></li>
+      <li><a href="/logout">logout</a></li>
+      <li><a href="/create_report">create report</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+</body>
