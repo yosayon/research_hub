@@ -18,6 +18,7 @@ class ReportController < ApplicationController
  end
 
  post '/create_report' do
+  binding.pry
  end
 end
 
