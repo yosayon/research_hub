@@ -13,6 +13,7 @@ task :clear_database do
  Dimension.delete_all
  Statement.delete_all
  Score.delete_all
+ CompanyReport.delete_all
 end
 
 desc 'Clear database and schema'
