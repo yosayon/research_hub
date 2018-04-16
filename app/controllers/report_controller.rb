@@ -17,5 +17,7 @@ class ReportController < ApplicationController
   end
  end
 
+ post '/create_report' do
+ end
 end
 
