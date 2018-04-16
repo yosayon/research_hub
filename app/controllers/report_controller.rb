@@ -22,9 +22,14 @@ class ReportController < ApplicationController
   @user = User.find_by_id(session[:user_id])
   @user.reports << @report
   
+  #@companyreport = CompanyReport.new
+  Statement.all.each do |sid|
+   params[:company_ids].each do |id|
+    @companyreport = CompanyReport.create(:company_id => id, :report_id => @report.id, :dimension_id => Statement.find_by_id(sid).dimension_id, :statement_id => sid.id)
+    @report.company_reports << @companyreport
+  end
+  end
   binding.pry
-  #@report.user_id = 
-  
  end
 end
 
