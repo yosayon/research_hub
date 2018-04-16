@@ -3,10 +3,10 @@ require 'csv'
 #seed companies
 companies = CSV.read('./db/data/companies.csv')
 companies_array = []
-companies.each{|row|companies_array << {:name => row[0], :response_count => row[1], :credibility_average => row[2], :respect_average => row[3], :fairness_average => row[4], :pride_average => row[5], :camaraderie_average => row[6], :final_statement => row[7], :average => row[8]}}
+companies.each{|row|companies_array << {:name => row[0]}}
 companies_array.each{|hash|Company.create(hash)}
 
-#see dimensions
+#seed dimensions
 dimensions = CSV.read('./db/data/dimensions.csv')
 dimensions_array = []
 dimensions.each{|row|dimensions_array << {:name => row[0]}}
@@ -23,3 +23,9 @@ scores = CSV.read('./db/data/scores.csv')
 scores_array = []
 scores.each{|row|scores_array << {:company_id => row[0], :statement_id => row[1], :score => row[2]}}
 scores_array.each{|hash|Score.create(hash)}
+
+#seed company_reports
+company_reports = CSV.read('./db/data/company_reports.csv')
+company_reports_array = []
+company_reports.each{|row|company_reports_array << {:company_id => row[1], :statement_id => row[2], :score_id => row[3], :dimension_id => row[4]}}
+company_reports_array.each{|hash|CompanyReport.create(hash)}
