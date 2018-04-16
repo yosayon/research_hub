@@ -7,6 +7,15 @@ class ReportController < ApplicationController
     redirect to '/homepage/homepage'
    end
   end
+  
+  get '/create_report' do
+  if logged_in?
+   @user = User.find_by_id(session[:user_id])
+   erb :'/reports/create_report'
+  else
+   erb :'/homepage/homepage'
+  end
+ end
 
 end
 
