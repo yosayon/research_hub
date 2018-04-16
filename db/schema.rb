@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_16_055722) do
+ActiveRecord::Schema.define(version: 2018_04_16_060341) do
+
+  create_table "company_reports", force: :cascade do |t|
+    t.integer "report_id"
+    t.integer "company_id"
+    t.integer "dimension_id"
+    t.integer "statement_id"
+    t.integer "score_id"
+  end
 
   create_table "reports", force: :cascade do |t|
     t.string "name"
