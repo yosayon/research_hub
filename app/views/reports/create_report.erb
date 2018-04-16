@@ -15,9 +15,9 @@
    <form action ="/create_report" method="POST">
      <h3 align="left">Companies</h3>
      <label>Report Name:</label>
-     <input type="text" name="name" required>
+     <input type="text" name="report[name]" required>
      <label>Description:</label>
-     <input type="text" name="description" required>
+     <input type="text" name="report[description]" required>
      <br><br>
      <% Company.all.each do |company| %>
       <input type="checkbox" name="company_ids[]" value="<%=company.id%>"><%= company.name %>
