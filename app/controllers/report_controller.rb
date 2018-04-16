@@ -18,7 +18,13 @@ class ReportController < ApplicationController
  end
 
  post '/create_report' do
+  @report = Report.create(params[:report])
+  @user = User.find_by_id(session[:user_id])
+  @user.reports << @report
+  
   binding.pry
+  #@report.user_id = 
+  
  end
 end
 
