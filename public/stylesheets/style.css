@@ -1,0 +1,58 @@
+body,h1 {
+    font-family: "sans-serif"
+}
+
+body, html {
+    height: 100%
+}
+
+body {
+    background-color: gray;
+    background: url('/images/background2.jpg');
+    background-size: cover;
+}
+
+.grandParentContaniner{
+		display:table; 
+		height:100%; 
+		margin: 0 auto;
+	}
+
+.parentContainer{
+  margin-top: 150px;
+  height: 100px;
+  border-radius: 5px;
+  opacity: 0.7;
+  padding: 50px;
+  animation: centerme 2s;
+  -webkit-animation: centerme 2s;
+  position: absolute;
+  z-index: 999;
+  animation-fill-mode: forwards; 
+  -webkit-animation-fill-mode: forwards;
+	}	
+
+@keyframes centerme {
+    0%   {left: 0%; top: 50%;}
+    100%  {left: 50%;top: 50%; margin-top: -150px;margin-left: -150px;}
+    /* Left and Top are 50% with margins which are half of width and height */
+}
+
+@-webkit-keyframes centerme {
+    0%   {left: 0;}
+    100%  {left: 50%; margin-left: -150px;}
+}
+
+.parentContainerSignupForm{
+  margin-top: 150px;
+  height: 200px;
+  border-radius: 5px;
+  opacity: 0.7;
+  padding: 85px;
+  animation: centerme 2s;
+  -webkit-animation: centerme 2s;
+  position: absolute;
+  z-index: 999;
+  animation-fill-mode: forwards; 
+  -webkit-animation-fill-mode: forwards;
+}
