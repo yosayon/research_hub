@@ -24,12 +24,15 @@
      <%end%>
      <h3>Dimensions</h3>
      <% Dimension.all.each do |dimension| %>
-     <%= dimension.name %><input type="checkbox" name="dimension_ids[]" value="<%=dimension.id%>">
+     <li><%= dimension.name %><input type="checkbox" name="dimension_ids[]" value="<%=dimension.id%>">
+     </li>
      <%end%>
      <h3>Statements</h3>
+     <ol>
      <% Statement.all.each do |statement| %>
-     <%= statement.name %><input type="checkbox" name="statement_ids[]" value="<%=statement.id%>">
+      <li><%= statement.name %></li><input type="checkbox" name="statement_ids[]" value="<%=statement.id%>">
      <%end%>
+     </ol>
      </div>
      <input type="submit" value="create">
 		 </form>
