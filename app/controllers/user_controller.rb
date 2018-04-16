@@ -2,7 +2,7 @@ class UserController < ApplicationController
  
  
  get '/signup' do
-  if !logged_in?
+  if session[:user_id]
    erb :'/users/signup'
    else
    @user = User.find_by_id(session[:user_id])
