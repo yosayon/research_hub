@@ -22,16 +22,41 @@ class ReportController < ApplicationController
   @user = User.find_by_id(session[:user_id])
   @user.reports << @report
   
-  params[:company_ids].each do |id|
-  Statement.all.each do |sid|
-    @companyreport = CompanyReport.create(:company_id => id, :report_id => @report.id, :dimension_id => Statement.find_by_id(sid.id).dimension_id, :statement_id => sid.id, :score_id => "hi" )
-    @report.company_reports << @companyreport
-  end
- end
- 
- @report.company_reports.select{|report| params[:statement_ids].include?(report.statement_id.to_s) || params[:dimension_ids].include?(report.dimension_id.to_s)}
+  if !params[:company_ids].empty? && !params[:statement_ids].empty? && !params[:dimension_ids].empty?
+   params[:company_ids].each do |cid|
+    Statement.all.each do |sid|
+     @companyreport = CompanyReport.create(
+      :company_id => cid.to_i, 
+      :report_id => @report.id, 
+      :dimension_id => Statement.find_by_id(sid.id).dimension_id, 
+      :statement_id => sid.id, 
+      )
+      @report.company_reports << @companyreport
+    end
+   end
+    @report.company_reports = @report.company_reports.select{|report|params[:statement_ids].include?(report.statement_id.to_s) || params[:dimension_ids].include?(report.dimension_id.to_s)}
 
-  binding.pry
- end
+    Score.all.each do |x|
+     @report.company_reports.each{|report| report.update(:score_id => x.id) if x.company_id == report.company_id && x.statement_id == report.statement_id}
+     #if the user only selects a company and nothing else..
+    elsif !params[:company_ids].empty? && params[:statement_ids].empty? && params[:dimension_ids].empty?
+      params[:company_ids].each do |cid|
+    Statement.all.each do |sid|
+     @companyreport = CompanyReport.create(
+      :company_id => cid.to_i, 
+      :report_id => @report.id, 
+      :dimension_id => Statement.find_by_id(sid.id).dimension_id, 
+      :statement_id => sid.id, 
+      )
+      @report.company_reports << @companyreport
+    
+     end
+   end
+  end
+  
+  
+  
 end
 
+    
+    
