@@ -1,3 +1,22 @@
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr {
+    background-color: #dddddd;
+}
+</style>
+
+
 <body>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -16,13 +35,19 @@
 </body>
 
 
-
-<%@report.company_reports.each do |report|%>
-  <li>
-   <%= Company.find_by_id(report.company_id).name %>
-   <br><br>
-   <%= Dimension.find_by_id(report.dimension_id).name %>
-   <%= Statement.find_by_id(report.statement_id).name %>
-   <%= Score.find_by_id(report.score_id).score.to_f %>
-</li>
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Dimension</th>
+    <th>Statement</th>
+    <th>Score</th>
+  </tr>
+  <% @report.company_reports.each do |report| %>
+  <tr>
+    <td><%= Company.find_by_id(report.company_id).name %></td>
+    <td><%= Dimension.find_by_id(report.dimension_id).name %></td>
+    <td><%= Statement.find_by_id(report.statement_id).name %></td>
+    <td><%= Score.find_by_id(report.score_id).score.to_f %></td>
+  </tr>
 <% end %>
+</table>
