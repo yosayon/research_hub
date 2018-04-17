@@ -1,5 +1,3 @@
-HI
-
 <body>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -16,3 +14,15 @@ HI
 
 <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
 </body>
+
+
+
+<%@report.company_reports.each do |report|%>
+  <li>
+   <%= Company.find_by_id(report.company_id).name %>
+   <br><br>
+   <%= Dimension.find_by_id(report.dimension_id).name %>
+   <%= Statement.find_by_id(report.statement_id).name %>
+   <%= Score.find_by_id(report.score_id).score.to_f %>
+</li>
+<% end %>
