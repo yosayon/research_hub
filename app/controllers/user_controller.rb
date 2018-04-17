@@ -24,7 +24,6 @@ class UserController < ApplicationController
   if !logged_in?
    erb :'/homepage/homepage'
   else
-   @user = User.find_by_id(session[:user_id])
    redirect to "/users/#{@user.slug}"
   end
  end
@@ -35,6 +34,7 @@ class UserController < ApplicationController
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
   else
+   flash[:message] = "Incorrect username or password, please try again"
    redirect to '/login'
   end
  end
