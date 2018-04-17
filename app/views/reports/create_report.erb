@@ -11,6 +11,11 @@
   </div>
 </nav>
 
+	    <p style="color:red;">
+        <% if flash.has?(:message) %>
+        <b><%= flash[:message] %></b>
+        <% end %>
+    </p>
   
    <form action ="/create_report" method="POST">
      <h3 align="left">Companies</h3>
@@ -37,11 +42,7 @@
      <input type="submit" value="create">
 	</form>
 	
-	<p>
-        <% if flash.has?(:message) %>
-        <%= flash[:message] %>
-        <% end %>
-    </p>
+
 		 
 
  
