@@ -19,9 +19,14 @@ class UserController < ApplicationController
  end
  
  post '/signup' do
-  @user = User.create(params)
-  session[:user_id] = @user.id
-  redirect to '/login'
+  if User.all.include?(:username => params[:username])
+   flash[:message] = "username is already taken"
+   erb :'/homepage/homepage'
+  else
+   @user = User.create(params)
+   session[:user_id] = @user.id
+   redirect to '/login'
+  end
  end
  
  get '/homepage' do
@@ -35,17 +40,16 @@ class UserController < ApplicationController
  
  get '/login' do
   @user = User.find_by_id(session[:user_id])
-  if logged_in?
+  if @user && logged_in?
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
   else
    erb :'/homepage/homepage'
   end
  end
-
+ 
   post '/login' do
    @user = User.find_by(:username => params[:username])
-   binding.pry
   if @user && @user.authenticate(params[:password])
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
