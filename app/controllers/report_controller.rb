@@ -84,7 +84,6 @@ class ReportController < ApplicationController
     
      #if the user only selects a company and nothing else..
     elsif params[:company_ids] && params[:statement_ids] == nil && params[:dimension_ids] == nil
-    binding.pry
      params[:company_ids].each do |cid|
       Statement.all.each do |sid|
        @companyreport = CompanyReport.create(
