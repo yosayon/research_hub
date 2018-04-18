@@ -100,12 +100,6 @@ body {
 
 </style>
 
-<p style="color:red;">
-        <% if flash.has?(:message) %>
-        <b><%= flash[:message] %></b>
-        <% end %>
-</p>
-
 
 
 <nav class="navbar navbar-default">
@@ -135,7 +129,12 @@ body {
      <label>Description:</label>
      <input type="text" name="report[description]" required>
      <br><br>
-     
+
+<p style="color:red;">
+   <% if flash.has?(:message) %>
+   <b><%= flash[:message] %></b>
+   <% end %>
+</p> 
 
 <div class="row">
   <div class="card">
