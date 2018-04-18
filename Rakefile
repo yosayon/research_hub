@@ -14,6 +14,7 @@ task :clear_database do
  Statement.delete_all
  Score.delete_all
  CompanyReport.delete_all
+ Report.delete_all
 end
 
 desc 'Clear database and schema'
