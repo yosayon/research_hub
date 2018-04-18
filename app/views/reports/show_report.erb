@@ -11,7 +11,7 @@ td, th {
     padding: 8px;
 }
 
-tr {
+tr{
     background-color: #dddddd;
 }
 </style>
@@ -49,5 +49,6 @@ tr {
     <td><%= Statement.find_by_id(report.statement_id).name %></td>
     <td><%= Score.find_by_id(report.score_id).score.to_f %></td>
   </tr>
+
 <% end %>
 </table>
