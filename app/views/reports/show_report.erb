@@ -1,8 +1,27 @@
 <style>
+{
+    box-sizing: border-box;
+}
+
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; 
+}
+
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
 }
 
 td, th {
@@ -13,6 +32,60 @@ td, th {
 
 tr{
     background-color: #dddddd;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #f1f1f1;
+}
+
+.header {
+    padding: 20px;
+    font-size: 40px;
+    text-align: center;
+    background: white;
+}
+
+.leftcolumn {   
+    float: left;
+    width: 75%;
+}
+
+.rightcolumn {
+    float: left;
+    width: 25%;
+    padding-left: 20px;
+}
+
+.card {
+     background-color: white;
+     padding: 20px;
+     margin-top: 20px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+        width: 100%;
+        padding: 0;
+    }
 }
 </style>
 
@@ -30,25 +103,71 @@ tr{
     </ul>
   </div>
 </nav>
-
-<h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
 </body>
 
 
-<table>
-  <tr>
-    <th>Company</th>
-    <th>Dimension</th>
-    <th>Statement</th>
-    <th>Score</th>
-  </tr>
-  <% @report.company_reports.each do |report| %>
-  <tr>
-    <td><%= Company.find_by_id(report.company_id).name %></td>
-    <td><%= Dimension.find_by_id(report.dimension_id).name %></td>
-    <td><%= Statement.find_by_id(report.statement_id).name %></td>
-    <td><%= Score.find_by_id(report.score_id).score.to_f %></td>
-  </tr>
+<body>
 
-<% end %>
-</table>
+<div class="header">
+  <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+</div>
+
+
+<div class="row">
+  <div class="leftcolumn">
+    <div class="card">
+    <p>
+      
+    <table>
+      <h1><%=@report.name%></h1>
+      <h3><%=@report.description%></h3>
+      
+    <tr>
+      <th>Dimension</th>
+      <th>Statement</th>
+      <% id = @report.company_ids.uniq %>
+      <% id.each do |id| %>
+      <th> <%= Company.find_by_id(id).name %></th>
+    </tr>
+     <%end%>
+      
+     <%@report.company_reports.sort_by{|report|report.dimension_id}.each do |report|%>
+     <%if report.dimension_id == 6%>
+     <tr>
+       <td> GPTW Statement </td>
+      <%else%>
+      <td> <%=Dimension.find_by_id(report.dimension_id).name%> </td>
+     <%end%>
+      <td> <%=Statement.find_by_id(report.statement_id).name%> </td>
+    <tr>
+     <%end%>
+    </table>
+  </p>
+</div>
+    
+    
+  </div>
+  <div class="rightcolumn">
+    <div class="card">
+      <h2>About Me</h2>
+      <div class="fakeimg" style="height:100px;">Image</div>
+      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+    </div>
+    <div class="card">
+      <h3>Popular Post</h3>
+      <div class="fakeimg">Image</div><br>
+      <div class="fakeimg">Image</div><br>
+      <div class="fakeimg">Image</div>
+    </div>
+    <div class="card">
+      <h3>Follow Me</h3>
+      <p>Some text..</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <h2>Footer</h2>
+</div>
+
+</body>
