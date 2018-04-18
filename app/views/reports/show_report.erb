@@ -139,6 +139,7 @@ body {
       <td> <%=Dimension.find_by_id(report.dimension_id).name%> </td>
      <%end%>
       <td> <%=Statement.find_by_id(report.statement_id).name%> </td>
+      <td> <%=Score.find_by_id(report.score_id).score%> </td>
     <tr>
      <%end%>
     </table>
