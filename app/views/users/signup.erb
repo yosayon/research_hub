@@ -9,6 +9,13 @@
      <label for="email">EMAIL: &nbsp &nbsp</label>
      <input type="text" name="email" id="email" placeholder="your email" required>
      <br><br>
+    <div>
+      <p style="color:red;">
+        <% if flash.has?(:message) %>
+        <b><%= flash[:message] %></b>
+        <% end %>
+       </p>
+   </div>
      <label for="username">USERNAME:</label>
      <input type="text" name="username" id="username" required>
      <br><br>
