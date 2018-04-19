@@ -2,7 +2,7 @@ class ReportController < ApplicationController
  get '/reports' do
    if logged_in?
     @user = User.find_by_id(session[:user_id])
-    erb :'/reports/show_report'
+    erb :'/reports/reports'
    else
     redirect to '/homepage/homepage'
    end
@@ -16,11 +16,16 @@ class ReportController < ApplicationController
    erb :'/homepage/homepage'
   end
  end
+ 
+ get '/reports/:id' do
+  @user = User.find_by_id(session[:user_id])
+  @report = Report.find_by_id(params[:id].to_i)
+  erb :"/reports/show_report"
+ end
 
  post '/create_report' do
   @report = Report.create(params[:report])
   @user = User.find_by_id(session[:user_id])
-  @user.reports << @report
   
   if params[:company_ids] && params[:statement_ids] && params[:dimension_ids]
    params[:company_ids].each do |cid|
@@ -40,7 +45,6 @@ class ReportController < ApplicationController
      @report.company_reports.each{|report| report.update(:score_id => x.id) if x.company_id == report.company_id && x.statement_id == report.statement_id}
      end
      erb :"/reports/show_report"
-     
      
      #if the user selects only companies and dimensions
      elsif params[:company_ids]  && params[:statement_ids] == nil  && params[:dimension_ids]
@@ -80,8 +84,6 @@ class ReportController < ApplicationController
     end
     erb :"/reports/show_report"
     
-    
-    
      #if the user only selects a company and nothing else..
     elsif params[:company_ids] && params[:statement_ids] == nil && params[:dimension_ids] == nil
      params[:company_ids].each do |cid|
@@ -105,9 +107,39 @@ class ReportController < ApplicationController
    end
   end
   
-  
-  
+  patch '/reports/:id' do
+  @user = User.find_by_id(session[:user_id])
+  @report = Report.find_by_id(params[:id])
+  if logged_in?
+   @user.reports<< @report
+   @user.save
+   erb :"reports/reports"
+  else
+   erb "/homepage/homepage"
+  end
+  end
+ 
+ delete '/reports/:id' do
+  @user = User.find_by_id(session[:user_id])
+  if logged_in?
+   Report.all.each{|report| report.delete if report.id == params[:id].to_i}
+   @user.reports.each{|report| report.delete if report.id == params[:id].to_i}
+   @user.save
+    erb :"/reports/reports"
+  else
+   erb :"/homepage/homepage"
+  end
+ end
+ 
+ delete '/reports' do
+  @user = User.find_by_id(session[:user_id])
+  @user.reports.delete_all
+  @user.save
+  erb :"/reports/reports"
+ end
+
 end
+  
 
     
     
