@@ -9,12 +9,14 @@ end
 
 desc 'Remove all data from database except users'
 task :clear_database do
+ User.delete_all
+ CompanyReport.delete_all
  Company.delete_all
  Dimension.delete_all
  Statement.delete_all
  Score.delete_all
- CompanyReport.delete_all
  Report.delete_all
+ 
 end
 
 desc 'Clear database and schema'
