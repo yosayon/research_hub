@@ -20,10 +20,10 @@ class ReportController < ApplicationController
  get '/reports/:id' do
   @user = User.find_by_id(session[:user_id])
   @report = Report.find_by_id(params[:id].to_i)
-  if @user && @user.report_ids.include?(@report.id)
+  if @user.report_ids.include?(@report.id)
   erb :"/reports/show_report"
   else
-  erb :'/homepage/homepage'
+  erb :'/users/show'
   end
  end
 
