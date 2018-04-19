@@ -12,7 +12,15 @@
      <input type="submit" value="login">
      <br><br>
      <p align="center"><a href="/signup">Become a member</a></p>
-    
+     <div>
+      <p style="color:red;">
+        <% if flash.has?(:message) %>
+        <b><%= flash[:message] %></b>
+        <% end %>
+       </p>
+   </div>
 		 </form>
   </div>
+ 
+ 
  
