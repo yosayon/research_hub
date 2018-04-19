@@ -71,10 +71,10 @@ body {
 }
 
 .footer {
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     background: #ddd;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 800px) {
@@ -148,10 +148,11 @@ body {
          <td> Final Statement </td>
         <%else%>
          <td> <%=Dimension.find_by_id(report.dimension_id).name%> </td>
+        <%end%>
         <td> <%=Statement.find_by_id(report.statement_id).name%> </td>
         <td> <%=Score.find_by_id(report.score_id).score%> </td>
        </tr>
-       <%end%>
+       
        <%end%>
      </table>
      
@@ -247,7 +248,7 @@ body {
 </div>
 
 <div class="footer">
-  <h2>Footer</h2>
+  <p>Research Hub 2018 created by Yosa Yon<p>
 </div>
 
 </body>
