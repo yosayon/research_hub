@@ -103,7 +103,6 @@ class ReportController < ApplicationController
     Score.all.each do |x|
      @report.company_reports.each{|report| report.update(:score_id => x.id) if x.company_id == report.company_id && x.statement_id == report.statement_id}
     end
-     binding.pry
     erb :"/reports/show_report"
     
    else
