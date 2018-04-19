@@ -1,4 +1,12 @@
+<style>
+  .header {
+    padding: 20px;
+    font-size: 40px;
+    text-align: center;
+    background: white;
+}
 
+</style>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -12,5 +20,7 @@
   </div>
 </nav>
 
-<h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+<div class="header">
+  <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+</div>
 
