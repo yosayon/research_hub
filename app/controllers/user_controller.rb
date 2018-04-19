@@ -19,9 +19,10 @@ class UserController < ApplicationController
  end
  
  post '/signup' do
-  if User.all.include?(:username => params[:username])
+  @user = User.all.include?(:username => params[:username])
+  if !@user
    flash[:message] = "username is already taken"
-   erb :'/homepage/homepage'
+   erb :"users/signup"
   else
    @user = User.create(params)
    session[:user_id] = @user.id
