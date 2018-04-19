@@ -1,4 +1,4 @@
-# Research Hub#
+# Research Hub
 
 What is a Research Hub?
 - an internal research hub that allows multiple users to comb through company data for white paper research! 
@@ -10,7 +10,7 @@ Can you explain a little more about what kind of data Ill see in the research hu
 - I'm so glad you asked ;) A survey consists of 60 statements. Each statement belongs to one of the 5 dimensions. Each statement has a score in the form of a decimal that represents the percentage of employees that rated the statement positively on a likert scale [1 = Strongly Disagree, 2 = Disagree, 3 = Neither Agree or Disagree, 4 = Agree, 5 = Strongly Agree]. The scores are only representing employees from each company that rated the statement a 4 or a 5. 
 
 
-##Installation##
+## Installation ##
 To run this app:
 1. Clone the Repo
 2. Run Bundle Install
