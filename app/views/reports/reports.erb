@@ -1,16 +1,149 @@
+<style>
+{
+    box-sizing: border-box;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; 
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #f1f1f1;
+}
+.header {
+    padding: 5px;
+    font-size: 40px;
+    text-align: center;
+    background: white;
+}
+
+.card {
+     background-color: white;
+     padding: 20px;
+     margin-top: 20px;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+        width: 100%;
+        padding: 0;
+    }
+}
+
+[class*="col-"] {
+    float: left;
+    padding: 8px;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+.button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+</style>
+
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/reports">Research Hub</a>
+    <ul class="nav navbar-nav">
+      <li class="active"><a class="navbar-brand" href="/reports">Research Hub</a></li>
+      </ul>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/users/<%=@user.slug%>">Home</a></li>
+      <li><a href="/users/<%=@user.slug%>">Home</a></li>
       <li><a href="/logout">logout</a></li>
       <li><a href="/create_report">create report</a></li>
     </ul>
   </div>
 </nav>
 
-<h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
 
+<body>
+
+<div class="header">
+  <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+</div>
+
+<div class="header">
+  <h1 align="center"><font color="lightblue">Reports</font></h1>
+</div>
+
+<div class="row">
+   
+  <div class="col-1">
+    <table>
+      <th>Report Name</th>
+      <th>Report Description</th>
+      <th>
+        <form action="/reports" method="POST">
+          <input type="hidden" id="hidden" name="_method" value="DELETE">
+          <input class="button button1" type="submit" value="Delete  All">
+      </form>
+      </th>
+     <% @user.report_ids.each do |id| %>
+     <tr>
+     <td><a href="/reports/<%=id%>"><%=Report.find_by_id(id).name%></a></td>
+     <td><%=Report.find_by_id(id).description%></td>
+     <td>
+      <form action="/reports/<%=id%>" method="POST">
+          <input type="hidden" id="hidden" name="_method" value="DELETE">
+          <input class="button button1" type="submit" value="Delete Report">
+      </form>
+    </td>
+    </tr>
+    <%end%>
+    </table>
+    
+
+   </div>
+ </div>
+
+</body>
