@@ -1,8 +1,8 @@
 class UserController < ApplicationController
  
  get '/users/:slug' do
-  if logged_in?
-   @user = User.find_by_slug(params[:slug])
+  @user = User.find_by_id(session[:user_id])
+  if current_user
    erb :'users/show'
   else
    erb :'/homepage/homepage'
@@ -20,9 +20,7 @@ class UserController < ApplicationController
  
  post '/signup' do
   @user = User.find_by(:username => params[:username])
-  binding.pry
   if !@user.nil?
-   binding.pry
    flash[:message] = "username is already taken"
    erb :"users/signup"
   else
