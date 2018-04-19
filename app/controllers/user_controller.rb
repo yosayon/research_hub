@@ -19,8 +19,10 @@ class UserController < ApplicationController
  end
  
  post '/signup' do
-  @user = User.all.include?(:username => params[:username])
-  if !@user
+  @user = User.find_by(:username => params[:username])
+  binding.pry
+  if !@user.nil?
+   binding.pry
    flash[:message] = "username is already taken"
    erb :"users/signup"
   else
