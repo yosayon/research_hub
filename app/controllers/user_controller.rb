@@ -30,6 +30,14 @@ class UserController < ApplicationController
   end
  end
  
+ get '/' do 
+  if logged_in?
+   redirect to "/login"
+  else
+   erb :"homepage/homepage"
+  end
+ end
+ 
  get '/homepage' do
   if logged_in?
    @user = User.find_by_id(session[:user_id])
