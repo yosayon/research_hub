@@ -1,7 +1,7 @@
  <div class="grandParentContaniner">
-    <h1 align="center"><font color="lightblue">RESEARCH HUB</font></h1>
-  <div class="parentContainer">
-     <form class="form-signin" action="/login" method="POST">
+   <h1 align="center"><font color="lightblue">RESEARCH HUB</font></h1>
+   <div class="parentContainer">
+    <form class="form-signin" action="/login" method="POST">
      <label>username</label>
      <input type="text" name="username">
      <br><br>
@@ -11,14 +11,18 @@
      <input type="submit" value="login">
      <br><br>
      <p align="center"><a href="/signup">Become a member</a></p>
-     <div>
-      <p style="color:red;">
+     
+     
+      <div>
+       <p style="color:red;">
         <% if flash.has?(:message) %>
         <b><%= flash[:message] %></b>
         <% end %>
        </p>
-   </div>
-		 </form>
-  </div>
+      </div>
+      
+      
+		  </form>
+ </div>
 
  
