@@ -26,7 +26,7 @@ class UserController < ApplicationController
   else
    @user = User.create(params)
    session[:user_id] = @user.id
-   redirect to '/login'
+   redirect to "/users/#{@user.slug}"
   end
  end
  
@@ -38,7 +38,7 @@ class UserController < ApplicationController
   end
  end
  
-  get '/login' do
+ get '/login' do
   @user = User.find_by_id(session[:user_id])
   if @user && logged_in?
    session[:user_id] = @user.id
@@ -48,8 +48,8 @@ class UserController < ApplicationController
   end
  end
  
-  post '/login' do
-   @user = User.find_by(:username => params[:username])
+ post '/login' do
+  @user = User.find_by(:username => params[:username])
   if @user && @user.authenticate(params[:password])
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
