@@ -33,10 +33,9 @@ class UserController < ApplicationController
  get '/' do 
   redirect to "/login"
  end
- 
+
  get '/login' do
-  @user = User.find_by_id(session[:user_id])
-  if @user && logged_in?
+  if logged_in?
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
   else
