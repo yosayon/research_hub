@@ -73,10 +73,8 @@ body {
         padding: 0;
     }
 }
-
-
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -85,7 +83,7 @@ body {
     display: inline-block;
     font-size: 10px;
     margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
 }
@@ -117,140 +115,119 @@ body {
     </ul>
   </div>
 </nav>
-</body>
-
-
-<body>
 
 <div class="header">
   <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
 </div>
 
 
+<!-- Create table by iterating through the report.company_ids array because the amount of tables depends on the amount of companies selected for the report -->
+ <div class="row">
+  <div class="leftcolumn">
+   
+   <%@report.company_ids.uniq.each do |cid|%>
+    <div class="card">
+     <h1><%=@report.name%></h1>
+     <p><%=@report.description%></p>
 
-  <div class="row">
-    <div class="leftcolumn">
-    
-    
-    <%@report.company_ids.uniq.each do |cid|%>
-     <% i = 1 %>
-      <div class="card">
-      <p>
-      
       <table>
-      <h1><%=@report.name%></h1>
-      <p><%=@report.description%></p>
-
-      <tr>
-      <th>Dimension</th>
-      <th>Statement</th>
-      <th> <%= Company.find_by_id(cid).name %></th>
-      </tr>
-      <!--separate company_dimensions by company ID and then iterate through the reports</-->
-      <%@company_dimensions = @report.company_reports.select{|report|report if report.company_id == cid}%>
-      <%@company_dimensions.sort_by{|report|report.dimension_id}.each do |report|%>
+       <tr>
+        <th>Dimension</th>
+        <th>Statement</th>
+        <th> <%= Company.find_by_id(cid).name %></th>
+       </tr>
+<!--separate company_dimensions by company_id, then sort by dimension_id and create dimension, statement, and score data per company-->
+       <%@company_dimensions = @report.company_reports.select{|report|report if report.company_id == cid}%>
+       <%@company_dimensions.sort_by{|report|report.dimension_id}.each do |report|%>
        <%if report.dimension_id == 6%>
-        <tr>
-         <td> Final Statement </td>
-        <%else%>
-         <td> <%=Dimension.find_by_id(report.dimension_id).name%> </td>
-        <%end%>
+       <tr>
+        <td> Final Statement </td>
+       <%else%>
+        <td> <%=Dimension.find_by_id(report.dimension_id).name%> </td>
+       <%end%>
         <td> <%=Statement.find_by_id(report.statement_id).name%> </td>
         <td> <%=Score.find_by_id(report.score_id).score%> </td>
        </tr>
-       
        <%end%>
      </table>
-     
-     
-    </p>
-   </div>
-   <%end%>
   </div>
+   <%end%>
+ </div>
   
-  
-  
+<!-- For the right column, iterate through the companies and create the dimension averages per company, each company should have it's own card -->  
   <div class="rightcolumn">
     <div class="card">
-     
      <h4>Dimension Averages</h4>
-      
       <% @report.company_ids.uniq.each do |id| %>
-        <br>
-        <h5 title="Based off all statements under each dimension"><b><u><%=Company.find_by_id(id).name%>:</u></b></h5>
-         
-        <% if @report.dimension_ids.include?(1)%>
-          <% credibility = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 1 && report.company_id == id}  .delete_if{|score|score == nil}%>
-          <% credibility_scores = Score.all.collect{|x| x.score.to_f if credibility.include?(x.id)}.delete_if{|score|score == nil} %>
-          <p><b>Credibility Average:</b> <%= (credibility_scores.reduce(:+)/credibility.size).round%>%</p>
-        <%end%>
-        
-        <% if @report.dimension_ids.include?(2)%>
-          <% respect = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 2 && report.company_id == id}.delete_if{|score|score ==   nil}%>
-          <% respect_scores = Score.all.collect{|x| x.score.to_f if respect.include?(x.id)}.delete_if{|score|score == nil} %>
-          <p><b>Respect Average:</b> <%= (respect_scores.reduce(:+)/respect.size).round%>%</p>
-        <%end%>
-        
-        <% if @report.dimension_ids.include?(3)%>
-          <% fairness = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 3 && report.company_id == id}.delete_if{|score|score   == nil}%>
-          <% fairness_scores = Score.all.collect{|x| x.score.to_f if fairness.include?(x.id)}.delete_if{|score|score == nil} %>
-          <p><b>Fairness Average:</b> <%= (fairness_scores.reduce(:+)/fairness.size).round%>%</p>
-        <%end%>
-       
-        <% if @report.dimension_ids.include?(4)%>
-         <% pride = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 4 && report.company_id == id}.delete_if{|score|score ==   nil}%>
-         <% pride_scores = Score.all.collect{|x| x.score.to_f if pride.include?(x.id)}.delete_if{|score|score == nil} %>
-          <p><b>Pride Average:</b> <%= (pride_scores.reduce(:+)/pride.size).round%>%</p>
-        <%end%>
-       
-         <% if @report.dimension_ids.include?(5)%>
-            <% camaraderie = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 5 && report.company.id == id}    .delete_if{|score|score == nil}%>
-           <% camaraderie_scores = Score.all.collect{|x| x.score.to_f if camaraderie.include?(x.id)}.delete_if{|score|score == nil} %>
-            <p><b>Camaraderie Average:</b> <%= (camaraderie_scores.reduce(:+)/camaraderie.size).round%>%</p>
-        <%end%>
+      <br>
+      <h5 title="Based off all statements under each dimension"><b><u><%=Company.find_by_id(id).name%>:</u></b></h5>
+<!--Credibility-->
+      <% if @report.dimension_ids.include?(1)%>
+       <% credibility = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 1 && report.company_id == id} .delete_if{|score|score == nil}%>
+       <% credibility_scores = Score.all.collect{|x| x.score.to_f if credibility.include?(x.id)}.delete_if{|score|score == nil} %>
+       <p><b>Credibility Average:</b> <%= (credibility_scores.reduce(:+)/credibility.size).round%>%</p>
       <%end%>
-     </div>
-     
-     
- 
-    
-  
-  
-    
+<!--Respect-->      
+      <% if @report.dimension_ids.include?(2)%>
+       <% respect = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 2 && report.company_id == id}.delete_if{|score|score ==   nil}%>
+       <% respect_scores = Score.all.collect{|x| x.score.to_f if respect.include?(x.id)}.delete_if{|score|score == nil} %>
+       <p><b>Respect Average:</b> <%= (respect_scores.reduce(:+)/respect.size).round%>%</p>
+      <%end%>
+<!--Fairness-->        
+      <% if @report.dimension_ids.include?(3)%>
+       <% fairness = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 3 && report.company_id == id}.delete_if{|score|score   == nil}%>
+       <% fairness_scores = Score.all.collect{|x| x.score.to_f if fairness.include?(x.id)}.delete_if{|score|score == nil} %>
+       <p><b>Fairness Average:</b> <%= (fairness_scores.reduce(:+)/fairness.size).round%>%</p>
+      <%end%>
+<!--Pride-->       
+      <% if @report.dimension_ids.include?(4)%>
+       <% pride = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 4 && report.company_id == id}.delete_if{|score|score ==   nil}%>
+       <% pride_scores = Score.all.collect{|x| x.score.to_f if pride.include?(x.id)}.delete_if{|score|score == nil} %>
+       <p><b>Pride Average:</b> <%= (pride_scores.reduce(:+)/pride.size).round%>%</p>
+      <%end%>
+<!--Camaraderie-->       
+      <% if @report.dimension_ids.include?(5)%>
+       <% camaraderie = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 5 && report.company.id == id}    .delete_if{|score|score == nil}%>
+       <% camaraderie_scores = Score.all.collect{|x| x.score.to_f if camaraderie.include?(x.id)}.delete_if{|score|score == nil} %>
+       <p><b>Camaraderie Average:</b> <%= (camaraderie_scores.reduce(:+)/camaraderie.size).round%>%</p>
+      <%end%>
+     <%end%>
+    </div>
+<!--end-->  
+
+<!--For the Average of all Statements card, iterate through company_ids again, and take an average of the 60 statements for each-->
     <div class="card">
-      <h4><b>Average of all Statements</b></h4>
-      
+     <h4><b>Average of all Statements</b></h4>
       <%@report.company_ids.uniq.each do |id|%>
       <%scores = (Score.all.collect{|x|x.score.to_f if x.company_id == id}.delete_if{|score|score == nil})%>
       <%average = (scores.reduce(:+)/scores.size).round%>
       <p><%=Company.find_by_id(id).name%>: <%=average%>% </p>
       <%end%>
     </div>
-    
+<!--For the Final Statement which belongs to no dimension, iterate through the company_id and display the score-->
     <div class="card">
-      <h4><b>Final Statement</b></h4>
-      
+     <h4><b>Final Statement</b></h4>
       <%@report.company_ids.uniq.each do |id|%>
       <%score = Score.all.collect{|x|x.score.to_f if x.company_id == id && x.statement_id == 60}.delete_if{|x|x == nil}%>
       <p><%=Company.find_by_id(id).name%>: <%=score[0].round%>% </p>
       <%end%>
     </div>
-    
-    
+
+<!--Add a Save Report button that will PATCH to the form action-->
     <div class="card">
-      <p>
-        <form action="/reports/<%=@report.id%>" method="POST">
-          <input type="hidden" id="hidden" name="_method" value="PATCH">
-          <input class="button button1" type="submit" value="Save Report">
-        </form>
-        <br><br>
-        <form action="/reports/<%=@report.id%>" method="POST">
-          <input type="hidden" id="hidden" name="_method" value="DELETE">
-          <input class="button button1" type="submit" value="Delete Report">
-        </form>
-      </p>
+     <p>
+      <form action="/reports/<%=@report.id%>" method="POST">
+       <input type="hidden" id="hidden" name="_method" value="PATCH">
+       <input class="button button1" type="submit" value="Save Report">
+      </form>
+<!--Add a Delete Report button that will DELETE to the form action-->
+      <br><br>
+      <form action="/reports/<%=@report.id%>" method="POST">
+       <input type="hidden" id="hidden" name="_method" value="DELETE">
+       <input class="button button1" type="submit" value="Delete Report">
+      </form>
+     </p>
     </div>
   </div>
 </div>
-
 </body>
