@@ -2,65 +2,54 @@
 {
   box-sizing: border-box;
 }
-
 .column {
     float: left;
     width: 50%;
     padding: 10px;
     height: 300px; 
 }
-
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
 }
-
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
-
 * {
     box-sizing: border-box;
 }
-
 body {
     font-family: Arial;
     padding: 20px;
     background: #f1f1f1;
 }
-
 .header {
     padding: 20px;
     font-size: 40px;
     text-align: center;
     background: white;
 }
-
 .leftcolumn {   
     float: left;
     width: 75%;
 }
-
 .rightcolumn {
     float: left;
     width: 25%;
     padding-left: 20px;
 }
-
 .card {
      background-color: white;
      padding: 20px;
      margin-top: 20px;
 }
-
 .row:after {
     content: "";
     display: table;
@@ -87,18 +76,15 @@ body {
     transition-duration: 0.4s;
     cursor: pointer;
 }
-
 .button1 {
     background-color: white; 
     color: black; 
     border: 2px solid #008CBA;
 }
-
 .button:hover {
     background-color: #008CBA;
     color: white;
 }
-
 </style>
 
 
@@ -111,7 +97,7 @@ body {
     <ul class="nav navbar-nav">
       <li class="active"><a href="/users/<%=@user.slug%>">Home</a></li>
       <li><a href="/logout">logout</a></li>
-      <li><a href="/create_report">create report</a></li>
+      <li><a href="/reports/new">create report</a></li>
     </ul>
   </div>
 </nav>
