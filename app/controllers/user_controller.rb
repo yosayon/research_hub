@@ -2,14 +2,14 @@ class UserController < ApplicationController
  
  get '/users/:slug' do
   @user = User.find_by_id(session[:user_id])
-  if current_user
+  if @user
    erb :'users/show'
   else
-   erb :login
+   redirect to '/login'
   end
  end
  
- get '/signup' do
+ get '/users' do
   if !logged_in?
    erb :'/users/new'
   else
@@ -18,7 +18,7 @@ class UserController < ApplicationController
   end
  end
  
- post '/signup' do
+ post '/users' do
   @user = User.find_by(:username => params[:username])
   if @user
    flash[:message] = "username is already taken"
@@ -36,7 +36,7 @@ class UserController < ApplicationController
 
  get '/login' do
   if !logged_in?
-   erb :login
+   erb :'/users/login'
   else
    @user = current_user
    redirect to "/users/#{@user.slug}"
@@ -50,13 +50,13 @@ class UserController < ApplicationController
    redirect to "/users/#{@user.slug}"
   else
    flash[:message] = "Incorrect username or password, please try again"
-   erb :login
+   erb :'users/login'
   end
  end
  
  get '/logout' do
   session.destroy
-  erb :login
+  redirect to '/login'
  end
  
 end
