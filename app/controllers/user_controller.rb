@@ -11,7 +11,7 @@ class UserController < ApplicationController
  
  get '/signup' do
   if !logged_in?
-   erb :'/users/signup'
+   erb :'/users/new'
   else
    @user = current_user
    redirect to "/users/#{@user.slug}"
@@ -22,7 +22,7 @@ class UserController < ApplicationController
   @user = User.find_by(:username => params[:username])
   if @user
    flash[:message] = "username is already taken"
-   erb :"users/signup"
+   erb :"users/new"
   else
    @user = User.create(params)
    session[:user_id] = @user.id
