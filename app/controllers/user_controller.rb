@@ -11,7 +11,7 @@ class UserController < ApplicationController
  
  get '/signup' do
   @user = User.find_by_id(session[:user_id])
-  if @user == nil
+  if !@user
    erb :'/users/signup'
   else
    redirect to "/users/#{@user.slug}"
@@ -31,11 +31,7 @@ class UserController < ApplicationController
  end
  
  get '/' do 
-  if logged_in?
-   redirect to "/login"
-  else
-   erb :'users/login'
-  end
+  redirect to "/login"
  end
  
  get '/login' do
