@@ -48,16 +48,6 @@ class UserController < ApplicationController
   end
  end
  
- get '/homepage' do
-  if logged_in?
-   @user = User.find_by_id(session[:user_id])
-  redirect to "/users/#{@user.slug}"
- else
-   erb :'/users/login'
-  end
- end
-
- 
   post '/login' do
    @user = User.find_by(:username => params[:username])
   if @user && @user.authenticate(params[:password])
