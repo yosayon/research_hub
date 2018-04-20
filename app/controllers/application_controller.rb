@@ -12,15 +12,6 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "theresearchhub"
   end
 
-
-  get '/' do 
-   if logged_in?
-    redirect to "/login"
-  else
-    erb :"homepage/homepage"
-  end
-  end
-
   helpers do
     def logged_in?
       !!session[:user_id]
