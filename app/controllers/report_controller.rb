@@ -4,7 +4,7 @@ class ReportController < ApplicationController
     @user = User.find_by_id(session[:user_id])
     erb :'/reports/reports'
    else
-    redirect to '/homepage/homepage'
+    redirect to '/login'
    end
   end
   
@@ -13,7 +13,7 @@ class ReportController < ApplicationController
    @user = User.find_by_id(session[:user_id])
    erb :'/reports/create_report'
   else
-   erb :'/homepage/homepage'
+   erb :'homepage'
   end
  end
  
@@ -119,7 +119,7 @@ class ReportController < ApplicationController
    @user.save
    erb :"reports/reports"
   else
-   erb "/homepage/homepage"
+   erb :homepage
   end
   end
  
@@ -131,7 +131,7 @@ class ReportController < ApplicationController
    @user.save
     erb :"/reports/reports"
   else
-   erb :"/homepage/homepage"
+   erb :homepage
   end
  end
  
