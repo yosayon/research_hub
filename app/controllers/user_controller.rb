@@ -5,7 +5,7 @@ class UserController < ApplicationController
   if current_user
    erb :'users/show'
   else
-   erb :'/users/login'
+   erb :login
   end
  end
  
@@ -22,7 +22,7 @@ class UserController < ApplicationController
   @user = User.find_by(:username => params[:username])
   if @user
    flash[:message] = "username is already taken"
-   erb :"users/new"
+   erb :'users/new'
   else
    @user = User.create(params)
    session[:user_id] = @user.id
@@ -31,12 +31,12 @@ class UserController < ApplicationController
  end
  
  get '/' do 
-  redirect to "/login"
+  redirect to '/login'
  end
 
  get '/login' do
   if !logged_in?
-   erb :'users/login'
+   erb :login
   else
    @user = current_user
    redirect to "/users/#{@user.slug}"
@@ -50,13 +50,13 @@ class UserController < ApplicationController
    redirect to "/users/#{@user.slug}"
   else
    flash[:message] = "Incorrect username or password, please try again"
-   erb :'users/login'
+   erb :login
   end
  end
  
  get '/logout' do
   session.destroy
-  redirect '/login'
+  erb :login
  end
  
 end
