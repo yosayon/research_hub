@@ -35,11 +35,11 @@ class UserController < ApplicationController
  end
 
  get '/login' do
-  if logged_in?
-   session[:user_id] = @user.id
-   redirect to "/users/#{@user.slug}"
-  else
+  if !logged_in?
    erb :'users/login'
+  else
+   @user = current_user
+   redirect to "/users/#{@user.slug}"
   end
  end
  
