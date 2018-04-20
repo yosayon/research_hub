@@ -10,17 +10,17 @@ class UserController < ApplicationController
  end
  
  get '/signup' do
-  @user = User.find_by_id(session[:user_id])
-  if !@user
+  if !logged_in?
    erb :'/users/signup'
   else
+   @user = current_user
    redirect to "/users/#{@user.slug}"
   end
  end
  
  post '/signup' do
   @user = User.find_by(:username => params[:username])
-  if !@user.nil?
+  if @user
    flash[:message] = "username is already taken"
    erb :"users/signup"
   else
@@ -50,7 +50,7 @@ class UserController < ApplicationController
    redirect to "/users/#{@user.slug}"
   else
    flash[:message] = "Incorrect username or password, please try again"
-   redirect to '/login'
+   erb :'users/login'
   end
  end
  
