@@ -5,7 +5,7 @@ class UserController < ApplicationController
   if current_user
    erb :'users/show'
   else
-   erb :'homepage'
+   erb :'/users/login'
   end
  end
  
@@ -34,7 +34,17 @@ class UserController < ApplicationController
   if logged_in?
    redirect to "/login"
   else
-   erb :"homepage"
+   erb :'users/login'
+  end
+ end
+ 
+  get '/login' do
+  @user = User.find_by_id(session[:user_id])
+  if @user && logged_in?
+   session[:user_id] = @user.id
+   redirect to "/users/#{@user.slug}"
+  else
+   erb :'users/login'
   end
  end
  
@@ -43,19 +53,10 @@ class UserController < ApplicationController
    @user = User.find_by_id(session[:user_id])
   redirect to "/users/#{@user.slug}"
  else
-   erb :"homepage"
+   erb :'/users/login'
   end
  end
- 
- get '/login' do
-  @user = User.find_by_id(session[:user_id])
-  if @user && logged_in?
-   session[:user_id] = @user.id
-   redirect to "/users/#{@user.slug}"
-  else
-   erb :'homepage'
-  end
- end
+
  
   post '/login' do
    @user = User.find_by(:username => params[:username])
