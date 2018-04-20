@@ -5,7 +5,7 @@ class UserController < ApplicationController
   if current_user
    erb :'users/show'
   else
-   erb :'/homepage/homepage'
+   erb :'homepage'
   end
  end
  
@@ -34,7 +34,7 @@ class UserController < ApplicationController
   if logged_in?
    redirect to "/login"
   else
-   erb :"homepage/homepage"
+   erb :"homepage"
   end
  end
  
@@ -43,7 +43,7 @@ class UserController < ApplicationController
    @user = User.find_by_id(session[:user_id])
   redirect to "/users/#{@user.slug}"
  else
-   erb :"homepage/homepage"
+   erb :"homepage"
   end
  end
  
@@ -53,7 +53,7 @@ class UserController < ApplicationController
    session[:user_id] = @user.id
    redirect to "/users/#{@user.slug}"
   else
-   erb :'/homepage/homepage'
+   erb :'homepage'
   end
  end
  
