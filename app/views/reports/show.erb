@@ -149,33 +149,33 @@ body {
       <h5 title="Based off all statements under each dimension"><b><u><%=Company.find_by_id(id).name%>:</u></b></h5>
 <!--Credibility-->
       <% if @report.dimension_ids.include?(1)%>
-       <% credibility = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 1 && report.company_id == id} .delete_if{|score|score == nil}%>
-       <% credibility_scores = Score.all.collect{|x| x.score.to_f if credibility.include?(x.id)}.delete_if{|score|score == nil} %>
-       <p><b>Credibility Average:</b> <%= (credibility_scores.reduce(:+)/credibility.size).round%>%</p>
+       <% credibility_statements = Dimension.all.collect{|dimension|dimension.statement_ids if dimension.id == 1}%>
+       <% credibility_scores = Score.all.collect{|x| x.score.to_f if x.company_id == id && credibility_statements.flatten.compact.include?(x.statement_id)}%>
+       <p><b>Credibility Average:</b> <%= (credibility_scores.compact.reduce(:+)/credibility_scores.compact.size).round%>%</p>
       <%end%>
 <!--Respect-->      
       <% if @report.dimension_ids.include?(2)%>
-       <% respect = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 2 && report.company_id == id}.delete_if{|score|score ==   nil}%>
-       <% respect_scores = Score.all.collect{|x| x.score.to_f if respect.include?(x.id)}.delete_if{|score|score == nil} %>
-       <p><b>Respect Average:</b> <%= (respect_scores.reduce(:+)/respect.size).round%>%</p>
+       <% respect_statements = Dimension.all.collect{|dimension|dimension.statement_ids if dimension.id == 2}%>
+       <% respect_scores = Score.all.collect{|x| x.score.to_f if x.company_id == id && respect_statements.flatten.compact.include?(x.statement_id)}%>
+       <p><b>Respect Average:</b> <%= (respect_scores.compact.reduce(:+)/respect_scores.compact.size).round%>%</p>
       <%end%>
 <!--Fairness-->        
       <% if @report.dimension_ids.include?(3)%>
-       <% fairness = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 3 && report.company_id == id}.delete_if{|score|score   == nil}%>
-       <% fairness_scores = Score.all.collect{|x| x.score.to_f if fairness.include?(x.id)}.delete_if{|score|score == nil} %>
-       <p><b>Fairness Average:</b> <%= (fairness_scores.reduce(:+)/fairness.size).round%>%</p>
+       <% fairness_statements = Dimension.all.collect{|dimension|dimension.statement_ids if dimension.id == 3}%>
+       <% fairness_scores = Score.all.collect{|x| x.score.to_f if x.company_id == id && fairness_statements.flatten.compact.include?(x.statement_id)}%>
+       <p><b>Fairness Average:</b> <%= (fairness_scores.compact.reduce(:+)/fairness_scores.compact.size).round%>%</p>
       <%end%>
 <!--Pride-->       
       <% if @report.dimension_ids.include?(4)%>
-       <% pride = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 4 && report.company_id == id}.delete_if{|score|score ==   nil}%>
-       <% pride_scores = Score.all.collect{|x| x.score.to_f if pride.include?(x.id)}.delete_if{|score|score == nil} %>
-       <p><b>Pride Average:</b> <%= (pride_scores.reduce(:+)/pride.size).round%>%</p>
+       <% pride_statements = Dimension.all.collect{|dimension|dimension.statement_ids if dimension.id == 4}%>
+       <% pride_scores = Score.all.collect{|x| x.score.to_f if x.company_id == id && pride_statements.flatten.compact.include?(x.statement_id)}%>
+       <p><b>Pride Average:</b> <%= (pride_scores.compact.reduce(:+)/pride_scores.compact.size).round%>%</p>
       <%end%>
 <!--Camaraderie-->       
       <% if @report.dimension_ids.include?(5)%>
-       <% camaraderie = @report.company_reports.collect{|report| report.score_id if report.dimension_id == 5 && report.company.id == id}    .delete_if{|score|score == nil}%>
-       <% camaraderie_scores = Score.all.collect{|x| x.score.to_f if camaraderie.include?(x.id)}.delete_if{|score|score == nil} %>
-       <p><b>Camaraderie Average:</b> <%= (camaraderie_scores.reduce(:+)/camaraderie.size).round%>%</p>
+       <% camaraderie_statements = Dimension.all.collect{|dimension|dimension.statement_ids if dimension.id == 5}%>
+       <% camaraderie_scores = Score.all.collect{|x| x.score.to_f if x.company_id == id && camaraderie_statements.flatten.compact.include?(x.statement_id)}%>
+       <p><b>Camaraderie Average:</b> <%= (camaraderie_scores.compact.reduce(:+)/camaraderie_scores.compact.size).round%>%</p>
       <%end%>
      <%end%>
     </div>
