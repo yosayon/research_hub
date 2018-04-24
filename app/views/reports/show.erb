@@ -124,7 +124,8 @@ body {
        </tr>
 <!--separate company_dimensions by company_id, then sort by dimension_id and create dimension, statement, and score data per company-->
        <%@company_dimensions = @report.company_reports.select{|report|report if report.company_id == cid}%>
-       <%@company_dimensions.sort_by{|report|report.dimension_id}.each do |report|%>
+       <%@company_dimensions.sort_by!{|report|report.dimension_id}.each do |report|%>
+      
        <%if report.dimension_id == 6%>
        <tr>
         <td> Final Statement </td>
@@ -199,18 +200,16 @@ body {
       <%end%>
     </div>
 
-<!--Add a Save Report button that will PATCH to the form action-->
-    <div class="card">
-     <p>
-      <form action="/reports/<%=@report.id%>" method="POST">
-       <input type="hidden" id="hidden" name="_method" value="PATCH">
-       <input class="button button1" type="submit" value="Save Report">
-      </form>
+
 <!--Add a Delete Report button that will DELETE to the form action-->
       <br><br>
       <form action="/reports/<%=@report.id%>" method="POST">
        <input type="hidden" id="hidden" name="_method" value="DELETE">
        <input class="button button1" type="submit" value="Delete Report">
+      </form>
+      <br><br>
+       <form action="/reports/<%=@report.id%>/edit" method="GET">
+       <input class="button button1" type="submit" value="Edit Report">
       </form>
      </p>
     </div>
