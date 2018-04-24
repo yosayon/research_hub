@@ -1,0 +1,161 @@
+<style>
+{
+  box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #f1f1f1;
+}
+.header {
+    padding: 20px;
+    font-size: 40px;
+    text-align: center;
+    background: white;
+}
+.card {
+     background-color: white;
+     padding: 20px;
+     margin-top: 20px;
+}
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+        width: 100%;
+        padding: 0;
+    }
+}
+[class*="col-"] {
+    float: left;
+    padding: 8px;
+}
+.button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+.button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+</style>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/reports">Research Hub</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/users/<%=@user.slug%>">Home</a></li>
+      <li><a href="/logout">logout</a></li>
+      <li class="active"><a href="/reports/new">create report</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<body>
+ <div class="header">
+  <h1 align="center"><font color="lightblue">Welcome, <%=@user.name%></font></h1>
+ </div>
+
+ <form action ="/reports/<%=@report.id%>/edit" method="POST">
+  <input type="hidden" id="hidden" name="_method" value="PATCH">
+  <br><br>
+  <label>Report Name:</label>
+  <input type="text" name="report[name]" value="<%=@report.name%>">
+  <label>Description:</label>
+  <input type="text" name="report[description]" value="<%=@report.description%>">
+  <br><br>
+
+  <p style="color:red;">
+     <% if flash.has?(:message) %>
+     <b><%= flash[:message] %></b>
+     <% end %>
+  </p> 
+
+ <div class="row">
+  <div class="card">
+   <div class="col-1">
+    <p>
+     <br><br>
+     Optional: Select Statement(s)
+     <table>
+      <th>Statements</th>
+      <% Statement.all.each do |statement| %>
+      <tr>
+       <td><input type="checkbox" name="statement_ids[]" value="<%=statement.id%>"><%=statement.name%> <%= 'checked' if @report.statement_ids.include?(statement.id)%></td>
+      </tr>
+      <%end%>
+     </table>
+    </p>
+   </div>
+
+   <div class="col-1">
+    <p>
+     <br><br>
+     Optional: Select Dimension(s)
+     <table>
+      <th>Dimensions</th>
+      <% Dimension.all.each do |dimension| %>
+      <tr>
+       <td><input type="checkbox" name="dimension_ids[]" value="<%=dimension.id%>" <%= 'checked' if @report.dimension_ids.include?(dimension.id)%>><%=dimension.name%></td>
+      </tr>
+      <%end%>
+     </table>
+    </p>
+   </div>
+    
+   <div class="col-1">
+    <p>
+     <br><br>
+     Required: Please select at least one company
+     <table>
+      <th>Companies</th>
+      <% Company.all.each do |company| %>
+      <tr>
+       <td><input type="checkbox" name="company_ids[]" value="<%=company.id%>" <%= 'checked' if @report.company_ids.include?(company.id)%>><%=company.name%></td>
+      <tr>
+      <%end%>
+     </table>
+    </p>
+   </div>
+    
+   <div class="col-1">
+    <br><br>
+     <input class="button button1"type="submit" value="Update Report">
+   </div>
+	 </form>
+ </div>
+</div>
+
+</body>
