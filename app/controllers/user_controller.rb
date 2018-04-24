@@ -18,7 +18,7 @@ class UserController < ApplicationController
  end
  
  post '/users' do
-  @user = User.find_by(:username => params[:username])#validation: username and password cannot be blank
+  #validation: username and password cannot be blank
   if current_user || params[:username].empty? || params[:password].empty?
    flash[:message] = "username is already taken/must enter a username and a password"
    erb :'users/new'
@@ -37,7 +37,6 @@ class UserController < ApplicationController
   if !logged_in? #validation: user cannot view the login page if they're already logged in
    erb :'/users/login'
   else
-   #@user = current_user
    redirect to "/users/#{current_user.slug}"
   end
  end
