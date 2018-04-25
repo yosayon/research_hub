@@ -10,10 +10,10 @@ class UserController < ApplicationController
  end
  
  get '/users' do
-  if !logged_in? #validation: user cannot see the signup page if they're aready logged in.
-   erb :'/users/new'
+  if logged_in? #validation: user cannot see the signup page if they're aready logged in.
+  redirect to "/users/#{current_user.slug}"
   else
-   redirect to "/users/#{current_user.slug}"
+   erb :'/users/new'
   end
  end
  
@@ -34,10 +34,10 @@ class UserController < ApplicationController
  end
 
  get '/login' do
-  if !logged_in? #validation: user cannot view the login page if they're already logged in
-   erb :'/users/login'
+  if logged_in? #validation: user cannot view the login page if they're already logged in
+  redirect to "/users/#{current_user.slug}"
   else
-   redirect to "/users/#{current_user.slug}"
+   erb :'/users/login'
   end
  end
  
